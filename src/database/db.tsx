@@ -22,7 +22,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-type MovieInfoType = {
+export interface MovieInfoType {
 	id: string;
 	title_en: string;
 	title_bg: string;
@@ -40,7 +40,7 @@ type MovieInfoType = {
 	posterUrl: string;
 	screenshotUrl: string;
 	trailerUrl: string;
-};
+}
 
 type UserInfoType = {
 	username: string;
@@ -57,13 +57,15 @@ export const addUser = (props: UserInfoType) => {
 	});
 };
 
-export const getMovies = async () => {
+export const getMovies = async (): Promise<MovieInfoType[]> => {
 	const moviesRef = ref(database, "movies");
 	const movies = await get(moviesRef);
-	return movies.val();
+	let result: MovieInfoType[] = [];
+	Object.entries(movies.val()).forEach((val) => result.push(val[1] as MovieInfoType));
+	return result;
 };
 
-export const getMovie = async (id: string): Promise<MovieInfoType[]> => {
+export const getMovie = async (id: string): Promise<MovieInfoType> => {
 	const movieRef = ref(database, "movies/" + id);
 	const movie = await get(movieRef);
 	return movie.val();
@@ -97,8 +99,8 @@ export const addMovies = () => {
 		dislikes: 72,
 		rating: 9,
 		imdb_rating: 8.3,
-		posterUrl: "./images/lionKing.webp",
-		screenshotUrl: "./images/lionking-screenshot.jpg",
+		posterUrl: "/images/lionKing.webp",
+		screenshotUrl: "/images/lionking-screenshot.jpg",
 		trailerUrl: "https://www.youtube.com/embed/lFzVJEksoDY",
 		comments: [
 			{
@@ -124,8 +126,8 @@ export const addMovies = () => {
 		rating: 8.8,
 		imdb_rating: 8.8,
 		comments: [],
-		posterUrl: "./images/interstellar.jpg",
-		screenshotUrl: "./images/interstellar-screenshot.jpg",
+		posterUrl: "/images/interstellar.jpg",
+		screenshotUrl: "/images/interstellar-screenshot.jpg",
 		trailerUrl: "https://www.youtube.com/embed/zSWdZVtXT7E",
 	});
 
@@ -145,8 +147,8 @@ export const addMovies = () => {
 		rating: 8.3,
 		imdb_rating: 8.8,
 		comments: [],
-		posterUrl: "./images/inception.jpg",
-		screenshotUrl: "./images/inception-screenshot.jpg",
+		posterUrl: "/images/inception.jpg",
+		screenshotUrl: "/images/inception-screenshot.jpg",
 		trailerUrl: "https://www.youtube.com/embed/YoHD9XEInc0",
 	});
 
@@ -166,8 +168,8 @@ export const addMovies = () => {
 		rating: 7.8,
 		imdb_rating: 6.1,
 		comments: [],
-		posterUrl: "./images/tenet.jpg",
-		screenshotUrl: "./images/tenet-screenshot.jpg",
+		posterUrl: "/images/tenet.jpg",
+		screenshotUrl: "/images/tenet-screenshot.jpg",
 		trailerUrl: "https://www.youtube.com/embed/LdOM0x0XDMo",
 	});
 
@@ -187,8 +189,8 @@ export const addMovies = () => {
 		rating: 9.1,
 		imdb_rating: 8.5,
 		comments: [],
-		posterUrl: "./images/thegreenmile.jpg",
-		screenshotUrl: "./images/thegreenmile-screenshot.jpg",
+		posterUrl: "/images/thegreenmile.jpg",
+		screenshotUrl: "/images/thegreenmile-screenshot.jpg",
 		trailerUrl: "https://www.youtube.com/embed/Bg7epsq0OIQ",
 	});
 
@@ -208,8 +210,8 @@ export const addMovies = () => {
 		rating: 9.4,
 		imdb_rating: 9.3,
 		comments: [],
-		posterUrl: "./images/shawshank.jpg",
-		screenshotUrl: "./images/shawshank-screenshot.jpg",
+		posterUrl: "/images/shawshank.jpg",
+		screenshotUrl: "/images/shawshank-screenshot.jpg",
 		trailerUrl: "https://www.youtube.com/embed/PLl99DlL6b4",
 	});
 
@@ -229,8 +231,8 @@ export const addMovies = () => {
 		rating: 8.7,
 		imdb_rating: 7.7,
 		comments: [],
-		posterUrl: "./images/butterfly.jpg",
-		screenshotUrl: "./images/butterfly-screenshot.jpg",
+		posterUrl: "/images/butterfly.jpg",
+		screenshotUrl: "/images/butterfly-screenshot.jpg",
 		trailerUrl: "https://www.youtube.com/embed/B8_dgqfPXFg",
 	});
 
@@ -250,8 +252,8 @@ export const addMovies = () => {
 		rating: 7.8,
 		imdb_rating: 9.2,
 		comments: [],
-		posterUrl: "./images/thegodfather.jpg",
-		screenshotUrl: "./images/thegodfather-screenshot.jpg",
+		posterUrl: "/images/thegodfather.jpg",
+		screenshotUrl: "/images/thegodfather-screenshot.jpg",
 		trailerUrl: "https://www.youtube.com/embed/UaVTIH8mujA",
 	});
 
@@ -271,8 +273,8 @@ export const addMovies = () => {
 		rating: 8.9,
 		imdb_rating: 8.9,
 		comments: [],
-		posterUrl: "./images/schindler.jpg",
-		screenshotUrl: "./images/schindler-screenshot.jpg",
+		posterUrl: "/images/schindler.jpg",
+		screenshotUrl: "/images/schindler-screenshot.jpg",
 		trailerUrl: "https://www.youtube.com/embed/mxphAlJID9U",
 	});
 
@@ -292,8 +294,8 @@ export const addMovies = () => {
 		rating: 9.0,
 		imdb_rating: 8.1,
 		comments: [],
-		posterUrl: "./images/platoon.jpg",
-		screenshotUrl: "./images/platoon-screenshot.jpg",
+		posterUrl: "/images/platoon.jpg",
+		screenshotUrl: "/images/platoon-screenshot.jpg",
 		trailerUrl: "https://www.youtube.com/embed/R8weLPF4qBQ",
 	});
 
@@ -313,8 +315,8 @@ export const addMovies = () => {
 		rating: 8.8,
 		imdb_rating: 7.6,
 		comments: [],
-		posterUrl: "./images/thethinredline.jpg",
-		screenshotUrl: "./images/thethinredline-screenshot.jpg",
+		posterUrl: "/images/thethinredline.jpg",
+		screenshotUrl: "/images/thethinredline-screenshot.jpg",
 		trailerUrl: "https://www.youtube.com/embed/mKl5_OxKBn8",
 	});
 
@@ -334,8 +336,8 @@ export const addMovies = () => {
 		rating: 8.3,
 		imdb_rating: 8.5,
 		comments: [],
-		posterUrl: "./images/apocalypsenow.jpg",
-		screenshotUrl: "./images/apocalypsenow-screenshot.jpg",
+		posterUrl: "/images/apocalypsenow.jpg",
+		screenshotUrl: "/images/apocalypsenow-screenshot.jpg",
 		trailerUrl: "https://www.youtube.com/embed/FTjG-Aux_yQ",
 	});
 
@@ -354,8 +356,8 @@ export const addMovies = () => {
 		rating: 9.0,
 		imdb_rating: 8.1,
 		comments: [],
-		posterUrl: "./images/thethinredline.jpg",
-		screenshotUrl: "./images/thethinredline-screenshot.jpg",
+		posterUrl: "/images/thethinredline.jpg",
+		screenshotUrl: "/images/thethinredline-screenshot.jpg",
 		trailerUrl: "https://www.youtube.com/embed/R8weLPF4qBQ",
 	});
 
@@ -375,8 +377,8 @@ export const addMovies = () => {
 		rating: 9.1,
 		imdb_rating: 8.6,
 		comments: [],
-		posterUrl: "./images/privateryan.jpg",
-		screenshotUrl: "./images/privateryan-screenshot.jpg",
+		posterUrl: "/images/privateryan.jpg",
+		screenshotUrl: "/images/privateryan-screenshot.jpg",
 		trailerUrl: "https://www.youtube.com/embed/9CiW_DgxCnQ",
 	});
 
@@ -396,8 +398,8 @@ export const addMovies = () => {
 		rating: 8.6,
 		imdb_rating: 6.2,
 		comments: [],
-		posterUrl: "./images/exodus.jpg",
-		screenshotUrl: "./images/exodus-screenshot.jpg",
+		posterUrl: "/images/exodus.jpg",
+		screenshotUrl: "/images/exodus-screenshot.jpg",
 		trailerUrl: "https://www.youtube.com/embed/t-8YsulfxVI",
 	});
 
@@ -417,8 +419,8 @@ export const addMovies = () => {
 		rating: 10.0,
 		imdb_rating: 7.1,
 		comments: [],
-		posterUrl: "./images/thepassionofthechrist.jpg",
-		screenshotUrl: "./images/thepassionofthechrist-screenshot.jpg",
+		posterUrl: "/images/thepassionofthechrist.jpg",
+		screenshotUrl: "/images/thepassionofthechrist-screenshot.jpg",
 		trailerUrl: "https://www.youtube.com/embed/4Aif1qEB_JU",
 	});
 };

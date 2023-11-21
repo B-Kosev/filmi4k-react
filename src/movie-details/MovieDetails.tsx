@@ -1,3 +1,4 @@
+import { debug } from "console";
 import { useParams } from "react-router-dom";
 
 const MovieDetails = () => {
