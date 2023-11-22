@@ -68,7 +68,7 @@ export const getMovies = async (): Promise<MovieInfoType[]> => {
 export const getMovie = async (id: string): Promise<MovieInfoType> => {
 	const movieRef = ref(database, "movies/" + id);
 	const movie = await get(movieRef);
-	return movie.val();
+	return movie.val() as MovieInfoType;
 };
 
 export const getUser = async (id: string) => {

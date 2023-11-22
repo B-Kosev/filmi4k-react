@@ -1,4 +1,4 @@
-import { Card, Layout, Menu } from "antd";
+import { Card, Image, Layout, Menu } from "antd";
 import Meta from "antd/es/card/Meta";
 import Sider from "antd/es/layout/Sider";
 import { Content } from "antd/es/layout/layout";
@@ -102,8 +102,8 @@ const MovieCard = (props: MovieCardProps) => {
 			<Card
 				hoverable
 				bordered={false}
-				style={{ width: 200, height: 370 }}
-				cover={<img height="260" width="200" alt="example" src={movie.posterUrl} />}
+				style={{ width: 200, height: 410 }}
+				cover={<Image preview={false} width={200} height={300} alt="example" src={movie.posterUrl} />}
 			>
 				<Meta title={movie.title_bg} description={`${movie.year} | ${movie.director}`} />
 			</Card>
